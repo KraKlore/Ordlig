@@ -1,1 +1,1 @@
-pyinstaller --clean --onefile -n ordlig --add-data=".\fem_bokstav.txt;." .\ordlig_gui.py
+pyinstaller --clean --noconsole --onefile -n ordlig --add-data=".\fem_bokstav.txt;." .\ordlig_gui.py
