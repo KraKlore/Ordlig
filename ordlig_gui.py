@@ -2,6 +2,13 @@ from typing import List
 import PySimpleGUI as sg
 from findWord import findWords, openDictionary, create_correct_letter, correct_letter
 
+def check_illegal_input_values(cor_pos, cor, not_contain) -> bool:
+    legal_values = cor_pos + cor
+    for letter in legal_values:
+        if letter in not_contain:
+            return True
+    return False
+
 def clean_input_line(values):
     temp = ''
     letter :str 
@@ -86,7 +93,10 @@ def main():
                 for nr, letter in enumerate(correct_pos_names):
                     if values[letter] != '':
                         correct_pos.append(create_correct_letter(nr, values[letter]))
-                results = findWords(nb_dictionary, correct_pos, list(values[contains_letter_name]),list(values[not_contains_letter_name]))
+                if check_illegal_input_values(''.join((values[name] for name in correct_pos_names)),values[contains_letter_name],values[not_contains_letter_name]):
+                    results = ['Illegal input values.']
+                else:
+                    results = findWords(nb_dictionary, correct_pos, list(values[contains_letter_name]),list(values[not_contains_letter_name]))
                 # crop results and show
                 temp_results = results
                 if len(temp_results) > 200:
